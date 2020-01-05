@@ -9,14 +9,14 @@ script:
   - docker run -e CI=true danielbender/react-test npm test
 
 after_success:
-  - docker build -t danielbender/multi-client ./client
-  - docker build -t danielbender/multi-nginx ./nginx
-  - docker build -t danielbender/multi-server ./server
-  - docker build -t danielbender/multi-worker ./worker
+  - docker build -t $DOCKER_ID/multi-client ./client
+  - docker build -t $DOCKER_ID/multi-nginx ./nginx
+  - docker build -t $DOCKER_ID/multi-server ./server
+  - docker build -t $DOCKER_ID/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to Dockerhub
-  - docker push danielbender/multi-client
-  - docker push danielbender/multi-nginx
-  - docker push danielbender/multi-server
-  - docker push danielbender/multi-worker
+  - docker push $DOCKER_ID/multi-client
+  - docker push $DOCKER_ID/multi-nginx
+  - docker push $DOCKER_ID/multi-server
+  - docker push $DOCKER_ID/multi-worker
